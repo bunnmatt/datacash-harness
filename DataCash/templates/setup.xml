@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Request>
+  <Authentication>
+    <client>{{ transaction.account_vTID }}</client>
+    <password>{{ account.account_password }}</password>
+  </Authentication>
+  <Transaction>
+    <TxnDetails>
+	  <merchantreference>{{ transaction.txn_merchant_ref }}</merchantreference>
+	  <amount currency="GBP">{{ transaction.txn_amount }}</amount>
+	</TxnDetails>
+    <HpsTxn>
+	  <method>setup</method>
+	  <page_set_id>{{ transaction.pageset_number }}</page_set_id>
+	  <return_url>http://{{ transaction.host_name }}:{{ transaction.port_number }}{% url 'interstitial' transaction.txn_merchant_ref %}</return_url>
+	  <expiry_url>http://{{ transaction.host_name }}:{{ transaction.port_number }}{% url 'index'  %}</expiry_url>
+	  {% if transaction.txn_stored_card %}
+	  <Card>
+	    <pan type="hps_token">{{ transaction.txn_token }}</pan>
+      </Card>
+	    <DynamicData>
+		  <dyn_data_1>{{ transaction.txn_expiry_date }}</dyn_data_1>
+		  <dyn_data_2>{{ transaction.txn_cardholder_name }}</dyn_data_2>
+		  <dyn_data_3>{{ transaction.txn_token }}</dyn_data_3>
+		  <dyn_data_4>3</dyn_data_4>
+		</DynamicData>
+	   {% endif %}
+    </HpsTxn>
+  </Transaction>
+</Request>

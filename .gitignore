@@ -1,0 +1,14 @@
+*.sqlite3
+*.pyc
+
+DataCash.sublime-project
+DataCash.sublime-workspace
+
+DataCash/__pycache__
+DataCash/migrations/*
+DataCash/logs/*
+DataCashHarness/__pychache__
+DataCashHarness/front_end/bower_components
+DataCashHarness/front_end/node_modules
+
+.vagrant

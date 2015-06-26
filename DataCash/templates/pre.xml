@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Request>
+  <Authentication>
+    <client>{{ transaction.account_vTID }}</client>
+    <password>{{ account.account_password }}</password>
+  </Authentication>
+  <Transaction>
+    <TxnDetails>
+      <amount currency="GBP">{{ transaction.txn_amount }}</amount>
+      <capturemethod>{{ transaction.txn_capture_method }}</capturemethod>
+	  {% if transaction.txn_verify_3ds != 'noblock' %}
+      <ThreeDSecure>
+        <verify>{{ transaction.txn_verify_3ds }}</verify>
+        <merchant_url>https://www.example.com/</merchant_url>
+        <purchase_desc>Test Purchase</purchase_desc>
+        <purchase_datetime>{{ transaction.txn_threeds_date_time }}</purchase_datetime>
+        <Browser>
+          <accept_headers>*/*</accept_headers>
+          <user_agent>{{ transaction.txn_threeds_user_agent }}</user_agent>
+        </Browser>
+       </ThreeDSecure>
+	   {% endif %}
+    </TxnDetails>
+    <CardTxn>
+      <method>pre</method>
+      <card_details type="from_hps">{{ transaction.txn_datacash_ref }}</card_details>
+      <Card>
+      <Cv2Avs>
+        <street_address1>{{ transaction.txn_address_1 }}</street_address1>
+        <street_address2>{{ transaction.txn_address_2 }}</street_address2>
+        <street_address3>{{ transaction.txn_address_3 }}</street_address3>
+        <postcode>{{ transaction.txn_postcode }}</postcode>
+		{% if transaction.txn_cv2_avs != 0 %}
+        <policy>{{ transaction.txn_cv2_avs  }}</policy>
+		{% endif %}
+       </Cv2Avs>
+      </Card>
+    </CardTxn>
+  </Transaction>
+</Request>

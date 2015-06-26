@@ -1,0 +1,10 @@
+{% include "header.html" %}
+	
+	<section>
+		<iframe class="hps-session" src="{{ ResponseData.Response.HpsTxn.hps_url }}?HPS_SessionID={{ ResponseData.Response.HpsTxn.session_id }}" id="hcc-page"></iframe>
+	</section>
+	{% include "XmlMessages.html" %}
+	 </div>
+	</div>
+  </body>
+</html>

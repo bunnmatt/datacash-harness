@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+	<title>DataCash Payments Gateway Test</title>
+    <meta charset="utf-8">
+  </head>
+  <body onload="redirect();">
+
+  	<script type="text/javascript">
+  		function redirect(){
+  			document.getElementById('redirect_form').submit();
+  		}
+  	</script>
+
+  	<form action="http://localhost:8080{% url 'pre' merchant_ref %}" method="post" target="_top" id="redirect_form">
+
+  		<input type="hidden" name="txn_datacash_ref" value="{{ datacash_ref }}" />
+  		{% csrf_token %}
+  	</form>
+
+  </body>
+</html>

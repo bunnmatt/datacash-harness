@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Request>
+	<Authentication>
+		<client>{{ transaction.account_vTID }}</client>
+		<password>{{ account.account_password }}</password>
+	</Authentication>
+	<Transaction>
+		<TxnDetails>
+			<amount>{{ transaction.txn_amount }}</amount>
+			{% if transaction.txn_credit_plan %}
+			<creditplan_id>{{ transaction.txn_credit_plan</creditplan_id>
+			{% endif %}
+		</TxnDetails>
+		<HistoricTxn>
+			<merchantreference>{{ transaction.txn_merchant_ref }}</merchantreference>
+			<reference>{{ transaction.txn_datacash_ref }}</reference>
+			<authcode>{{ transaction.txn_auth_code }}</authcode>
+			<method>fulfill</method>
+		</HistoricTxn>
+	</Transaction>
+</Request>

@@ -1,0 +1,25 @@
+{% include "header.html" %}
+	
+	<div class="row">
+		<div>
+			<p>Status Code Received: {{ ResponseData.Response.status }}</p>
+			<p>Reason Received: {{ ResponseData.Response.reason }}</p>
+		</div>
+	<div>
+	{% if ResponseData.Response.CardTxn.ThreeDSecure.acs_url %}
+	<form action="{{ ResponseData.Response.CardTxn.ThreeDSecure.acs_url }}" method="post" >
+		<textarea name="PaReq">{{ pareq_message }}</textarea>
+		<input name="MD" value="{{ ResponseData.Response.datacash_reference }}" />
+		<input name="TermUrl" value="http://localhost:8080{% url 'auth' %}" />
+		<input type="submit" />
+	</form>
+	{% endif %}
+	{% if ResponseData.Response.CardTxn.authcode %}
+		{% include "fulfilForm.html" %}
+	{% endif %}
+
+	{% include "XmlMessages.html" %}
+	 </div>
+	</div>
+  </body>
+</html>

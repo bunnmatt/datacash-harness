@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Request>
+  <Authentication>
+    <client>{{ transaction.account_vTID }}</client>
+    <password>{{ account.account_password }}</password>
+  </Authentication>
+  <Transaction>
+    <HistoricTxn>
+      <reference>{{ transaction.txn_datacash_ref }}</reference>
+        <method>query_txn</method>
+    </HistoricTxn>
+  </Transaction>
+</Request>

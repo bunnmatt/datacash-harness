@@ -1,0 +1,139 @@
+{% load widget_tweaks %}
+{% include "header.html" %}
+	<form method="post" action="{% url 'setup' %}">
+		<fieldset class="form-group">
+			<legend><i class="fa fa-angle-right"></i> DataCash Environment and vTID</legend>
+			<div class="row">
+				<div class="col-sm-6">
+			{{ form.account_vTID.errors }}
+			{{ form.pageset_number.errors }}
+			
+			{% for environment in environments.all %}
+			<div class="row">
+				<div class="col-sm-12">
+					<h2><i class="fa fa-cloud"></i> {{ environment.environment_name }}</h2>
+				</div>
+			</div>
+			{% for account in environment.account_set.all %}
+			<div class="row">
+				<div class="col-sm-1">
+					<input type="radio" value="{{ account.account_vTID }}" name="account_vTID" class="form-control" />
+				</div>
+				<div class="col-sm-5">
+					<label>{{ account.account_vTID }} - {{ account.account_name }}</label>
+				</div>
+				<div class="col-sm-6">
+					<select name="pageset_number" class="form-control">
+							{% for pageset in account.pageset_set.all %}
+								<option value="{{ pageset.pageset_number }}">{{ pageset.pageset_name }} [{{ pageset.pageset_number }}]</option>
+							{% endfor %}
+					</select>
+				</div>
+			</div>
+			{% endfor %}
+			
+			{% endfor %}
+			</div>
+		</div>
+		</fieldset>
+		<fieldset class="form-group">
+			<legend><i class="fa fa-angle-right"></i> Hosted Card Capture Details</legend>
+			
+			<div class="row">
+				<div class="col-md-6">
+				<h2><i class="fa fa-list-alt"></i> Transaction Details</h2>
+				
+				<div class="form-group">
+					<label for="ref">Merchant Reference: </label>
+					{{ form.txn_merchant_ref|attr:"class:form-control" }}
+					{{ form.txn_merchant_ref.errors }}
+				</div>
+				<div class="form-group">
+					<label for="amount">Amount: </label>
+					{{ form.txn_amount|attr:"class:form-control" }}
+					{{ form.txn_amount.errors }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<h2><i class="fa fa-home"></i> Address (for <abbr title="Address Verification Service">AVS</abbr>)</h2>
+				<div class="form-group">
+					<label>Address 1: </label> 
+					{{ form.txn_address_1|attr:"class:form-control" }}
+					{{ form.txn_address_1.errors }}
+				</div>
+				<div class="form-group">
+					<label>Address 2: </label>
+					{{ form.txn_address_2|attr:"class:form-control" }} 
+					{{ form.txn_address_2.errors }}
+				</div>
+				<div class="form-group">
+					<label>Address 3: </label>
+					{{ form.txn_address_3|attr:"class:form-control" }} 
+					{{ form.txn_address_3.errors }}
+				</div>
+				<div class="form-group">
+					<label>Postcode: </label>
+					{{ form.txn_postcode|attr:"class:form-control" }} 
+					{{ form.txn_postcode.errors }}
+				</div>
+			</div>
+		</div>
+			<div class="row">
+				<div class="col-md-6">
+					<h2><i class="fa fa-credit-card"></i> Stored Card Details</h2>
+					<div class="form-group">
+						<label for="isStoredCard">Stored Card payment?</label>
+						{{ form.txn_stored_card|attr:"class:form-control" }}
+						{{ form.txn_stored_card.errors }}
+					</div>
+					<div class="form-group">
+						<label for="token">Token </label>
+						{{ form.txn_token|attr:"class:form-control" }}
+						{{ form.txn_token.errors }}
+					</div>
+					<div class="form-group">
+						<label for="chName">Cardholder Name </label>
+						{{ form.txn_cardholder_name|attr:"class:form-control" }}
+						{{ form.txn_cardholder_name.errors }}			
+					</div>
+					<div class="form-group">
+						<label for="expDate">Expiry Date </label>
+						{{ form.txn_expiry_date|attr:"class:form-control" }}
+						{{ form.txn_expiry_date.errors }}
+					</div>
+				</div>
+				<div class="col-md-6">
+					<h2><i class="fa fa-info-circle"></i> Other Request Parameters</h2>
+					<div class="form-group">
+						<label for="captureM">Capture Method</label>
+						{{ form.txn_capture_method|attr:"class:form-control" }}
+						{{ form.txn_capture_method.errors }}
+					</div>
+					<div class="form-group">
+						<label for="verify3ds">Verify 3DS?</label>
+						{{ form.txn_verify_3ds|attr:"class:form-control" }}
+						{{ form.txn_verify_3ds.errors }}
+				    </div>
+					<div class="form-group">
+						<label for="cv2avs">CV2/AVS Policy</label>
+						{{ form.txn_cv2_avs|attr:"class:form-control" }}
+						{{ form.txn_cv2_avs.errors }}
+					</div>
+					<div class="form-group">
+						<label for="txn_credit_plan">Credit Plan</label>
+						{{ form.txn_credit_plan|attr:"class:form-control" }}
+						{{ form.txn_credit_plan.errors }}
+					</div>
+			</div>
+		</div>
+		<div class="row">
+			{% csrf_token %}
+
+			<input class="btn btn-primary btn-lg col-md-4 col-md-offset-7" type="submit" value="Setup" />
+		</div>
+		</fieldset>
+	</form>
+	</div>
+  </div>
+ </body>
+</html>
