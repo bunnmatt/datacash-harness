@@ -9,6 +9,7 @@ import xml.etree.ElementTree as ET
 import time
 import xmltodict
 import os
+import requests
 
 
 # Import Django templating to construct XML messages
@@ -35,8 +36,7 @@ class DataCashPaymentGateway:
 		logFile.close()
 		
 		# Send the request message to the DataCash endpoint
-		gatewayRequest = urllib.request.Request(self.url, request.encode('utf-8'))
-		gatewayResponse = urllib.request.urlopen(gatewayRequest)
+		gatewayResponse = requests.post(self.url, data=request)
 		responseMessage = DataCashResponse(gatewayResponse)
 		
 		# Log the response message
@@ -89,9 +89,8 @@ class DataCashRequestMessage(DataCashMessage):
 class DataCashResponse(DataCashMessage):
 
 	def __init__(self, httpResponse):
-		self.status = httpResponse.status
-		self.reason = httpResponse.reason
-		self.content = httpResponse.read().decode(encoding='UTF-8')	
+		self.status = httpResponse.status_code
+		self.content = httpResponse.text
 		self.xmlObject = ET.fromstring(self.content)
 		
 	def getElementValue(self, elementName):

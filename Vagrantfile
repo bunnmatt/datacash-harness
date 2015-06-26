@@ -13,6 +13,7 @@ Vagrant.configure(2) do |config|
       sudo pip3 install django
       sudo pip3 install xmltodict
       sudo pip3 install django-widget-tweaks
+      sudo pip3 install requests
 
       sudo python /vagrant/manage.py runserver 0.0.0.0:8000
   SHELL

@@ -12,8 +12,8 @@
     <HpsTxn>
 	  <method>setup</method>
 	  <page_set_id>{{ transaction.pageset_number }}</page_set_id>
-	  <return_url>http://{{ transaction.host_name }}:{{ transaction.port_number }}{% url 'interstitial' transaction.txn_merchant_ref %}</return_url>
-	  <expiry_url>http://{{ transaction.host_name }}:{{ transaction.port_number }}{% url 'index'  %}</expiry_url>
+	  <return_url>http://{{ transaction.host_name }}{% url 'interstitial' transaction.txn_merchant_ref %}</return_url>
+	  <expiry_url>http://{{ transaction.host_name }}{% url 'index'  %}</expiry_url>
 	  {% if transaction.txn_stored_card %}
 	  <Card>
 	    <pan type="hps_token">{{ transaction.txn_token }}</pan>
