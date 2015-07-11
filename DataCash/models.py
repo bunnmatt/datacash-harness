@@ -42,6 +42,7 @@ class Transaction(models.Model):
 	txn_threeds_date_time = models.CharField(max_length=50, null=True, blank=True)
 	txn_threeds_pares = models.TextField(null=True, blank=True)
 	txn_credit_plan = models.CharField(max_length=25, null=True, blank=True)
+	txn_auth_code = models.CharField(max_length=10, null=True, blank=True)
 
 	stored_card_choices = (
 		(True, 'Yes'),
