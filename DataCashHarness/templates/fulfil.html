@@ -1,0 +1,14 @@
+{% include "header.html" %}
+	<section class="row">
+		<div class="col-md-6">
+			<h2><i class="fa fa-info-circle"></i> Fulfil Response</h2>
+			<p>Status Code Received: {{ ResponseData.Response.status }}</p>
+			<p>Reason Received: {{ ResponseData.Response.reason }}</p>
+		</div>
+	</section>
+
+	{% include "XmlMessages.html" %}
+	 </div>
+	</div>
+  </body>
+</html>

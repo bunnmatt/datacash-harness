@@ -108,16 +108,22 @@ def auth(request):
 
 def fulfil(request):
 
-	transaction = get_object_or_404(Transaction, txn_datacash_ref=request.POST['txn_datacash_ref'])
+	transaction = get_object_or_404(Transaction, txn_merchant_ref=request.POST['txn_merchant_ref'])
+	transaction.txn_auth_code = request.POST['txn_auth_code']
+	transaction.save()
+
+	account = get_object_or_404(Account, account_vTID=transaction.account_vTID)
+	environment = get_object_or_404(Environment, environment_name=account.environment_name)
 
 	# Create a PaymentGateway object
 	paymentGateway = PaymentGateway.DataCashPaymentGateway(environment, account)
 		
-	DataCashRequest = paymentGatewaycompletePayment(transaction)
+	DataCashRequest = paymentGateway.completePayment(transaction)
 	DataCashResponse = paymentGateway.submitRequest(DataCashRequest.getMessageAsXML())
 
 	return render(request, 'fulfil.html', {
 		'transaction' : transaction,
+		'ResponseData' : DataCashResponse.getMessageAsDict(), 
 		'XmlRequest' : DataCashRequest.getMessageAsXML(),
 		'XmlResponse' : DataCashResponse.getMessageAsXML() 
 	})
